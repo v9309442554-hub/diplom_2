@@ -1,6 +1,7 @@
 import allure
 
 from helpers.data_generator import generate_user_data
+from helpers.test_data import INCORRECT_LOGIN_DATA, WRONG_PASSWORD
 
 
 @allure.feature("Логин пользователя")
@@ -20,7 +21,7 @@ class TestLoginUser:
     def test_login_with_wrong_data(self, api):
         user = generate_user_data()
 
-        response = api.login_user(user["email"], "wrong_password")
+        response = api.login_user(user["email"], WRONG_PASSWORD)
 
         assert response.status_code == 401
-        assert response.json()["message"] == "email or password are incorrect"
+        assert response.json()["message"] == INCORRECT_LOGIN_DATA

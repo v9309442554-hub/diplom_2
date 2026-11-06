@@ -2,6 +2,7 @@ import allure
 import pytest
 
 from helpers.data_generator import generate_user_data
+from helpers.test_data import REQUIRED_FIELDS_MISSING, USER_ALREADY_EXISTS, USER_REQUIRED_FIELDS
 
 
 @allure.feature("Создание пользователя")
@@ -22,10 +23,10 @@ class TestCreateUser:
         response = api.register_user(**user)
 
         assert response.status_code == 403
-        assert response.json()["message"] == "User already exists"
+        assert response.json()["message"] == USER_ALREADY_EXISTS
 
     @allure.title("Создание пользователя без поля {missing_field}")
-    @pytest.mark.parametrize("missing_field", ["email", "password", "name"])
+    @pytest.mark.parametrize("missing_field", USER_REQUIRED_FIELDS)
     def test_create_user_without_field(self, api, missing_field):
         user = generate_user_data()
         user.pop(missing_field)
@@ -33,4 +34,4 @@ class TestCreateUser:
         response = api.register_user(**user)
 
         assert response.status_code == 403
-        assert response.json()["message"] == "Email, password and name are required fields"
+        assert response.json()["message"] == REQUIRED_FIELDS_MISSING

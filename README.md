@@ -7,6 +7,7 @@
 ```
 api/stellar_burgers_api.py   # методы API
 helpers/data_generator.py    # генерация данных пользователя
+helpers/test_data.py         # ожидаемые сообщения и тестовые данные
 tests/                       # тесты
 conftest.py                  # фикстуры
 pytest.ini                   # настройки pytest
